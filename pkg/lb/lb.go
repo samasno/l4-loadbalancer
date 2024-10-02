@@ -3,16 +3,16 @@ package lb
 import "net"
 
 type Layer4LoadBalancer struct {
-	conns         []net.Conn
-	HealthMonitor string
-	Upstreams     string
+	conns           map[string]net.Conn
+	HealthMonitor   string
+	UpstreamManager string
 }
 
 func (l *Layer4LoadBalancer) Balance(client *net.Conn) {
 	// get upstream
 	// open up connection to upstream
+	// strip protocol
 	// pipe between client and upstream
-
 }
 
 func (l *Layer4LoadBalancer) Pipe(up, down net.Conn) {
@@ -21,6 +21,9 @@ func (l *Layer4LoadBalancer) Pipe(up, down net.Conn) {
 }
 
 func pipe(in, out net.Conn) {
+	defer in.Close()
+	defer out.Close()
+
 	b := make([]byte, 1024)
 	for {
 		n, err := in.Read(b)
@@ -29,5 +32,8 @@ func pipe(in, out net.Conn) {
 		}
 
 		_, err = out.Write(b[:n])
+		if err != nil {
+			break
+		}
 	}
 }
