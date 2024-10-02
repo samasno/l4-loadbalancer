@@ -16,7 +16,7 @@ func NewHealthchecker() *HealthChecker {
 
 func (hc HealthChecker) IsAlive(host Host) (bool, error) {
 	h, _, err := normalizeURL(host)
-	println("got is alive host ", h)
+
 	if err != nil {
 		return false, err
 	}
@@ -34,7 +34,7 @@ func (hc HealthChecker) AddHost(host Host, path ...string) error {
 	if err != nil {
 		return err
 	}
-	println("adding host ", h)
+
 	hs := &healthStatus{
 		alive:    false,
 		endpoint: endpoint,
