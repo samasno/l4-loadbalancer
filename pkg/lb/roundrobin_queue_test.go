@@ -12,7 +12,7 @@ func TestRoundRobin(t *testing.T) {
 	r := NewRoundrobin()
 
 	for _, h := range testHosts {
-		r.Enqueue(h)
+		r.Add(h)
 	}
 
 	println(r.String())
@@ -28,11 +28,11 @@ func TestRoundRobinNext(t *testing.T) {
 	r := NewRoundrobin()
 
 	for _, h := range testHosts {
-		r.Enqueue(h)
+		r.Add(h)
 	}
 
 	for i := 0; i < len(testHosts); i++ {
-		next, err := r.Dequeue()
+		next, err := r.Next()
 		if err != nil {
 			t.Fatalf(err.Error())
 		}

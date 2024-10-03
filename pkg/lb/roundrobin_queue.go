@@ -23,7 +23,17 @@ func NewRoundrobin() *RoundrobinQueue {
 	return r
 }
 
-type Host = string
+func (r *RoundrobinQueue) Add(host Host) error {
+	return r.Enqueue(host)
+}
+
+func (r *RoundrobinQueue) Next() (Host, error) {
+	return r.Dequeue()
+}
+
+func (r *RoundrobinQueue) Count() int {
+	return len(r.hosts)
+}
 
 func (r *RoundrobinQueue) Enqueue(host Host) error {
 	_, host, err := normalizeURL(host)
