@@ -24,10 +24,7 @@ func TestHealthCheckerAddHost(t *testing.T) {
 		expectedB.WriteString(fmt.Sprintf("endpoint: %s; alive: false; passed: 0; failed: 0;\n", p))
 	}
 
-	hc, err := NewHealthchecker()
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	hc := NewHealthchecker()
 
 	for _, h := range testHosts {
 		hc.AddHost(h, testPath)
@@ -63,10 +60,7 @@ func TestCheckingServerHealth(t *testing.T) {
 	closer := startTestServers(liveServers)
 	defer closer()
 
-	hc, err := NewHealthchecker()
-	if err != nil {
-		t.Fatal(err.Error())
-	}
+	hc := NewHealthchecker()
 
 	for _, h := range hosts {
 		hc.AddHost(h)
