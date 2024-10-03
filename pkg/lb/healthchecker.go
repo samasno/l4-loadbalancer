@@ -10,8 +10,17 @@ import (
 
 type HealthChecker map[Host]*healthStatus
 
-func NewHealthchecker() *HealthChecker {
-	return &HealthChecker{}
+func NewHealthchecker(hosts ...Host) (*HealthChecker, error) {
+	h := &HealthChecker{}
+
+	for _, host := range hosts {
+		err := h.AddHost(host)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return h, nil
 }
 
 func (hc HealthChecker) IsAlive(host Host) (bool, error) {

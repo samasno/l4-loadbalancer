@@ -5,15 +5,18 @@ import "net"
 type TCP struct {
 	Addr    string
 	ln      net.Listener
-	conns   []net.Conn
-	handler func(*net.Conn)
+	handler Handler
+}
+
+type Handler interface {
+	Handle(net.Conn)
 }
 
 // have single handler for server
-type TcpHandler func(*net.Conn)
+type TcpHandler func(net.Conn)
 
-func (t *TCP) HandleFunc(fn TcpHandler) {
-	t.handler = fn
+func (t *TCP) Handle(h Handler) {
+	t.handler = h
 }
 
 func NewTcpServer(addr string) *TCP {
@@ -40,8 +43,8 @@ func (t *TCP) ListenAndServe() error {
 				break
 			}
 		}
-
-		go t.handler(&conn)
+		println("handling new conn ", conn.LocalAddr().String())
+		go t.handler.Handle(conn)
 	}
 
 	return nil
