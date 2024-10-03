@@ -43,7 +43,7 @@ func (t *TCP) ListenAndServe() error {
 				break
 			}
 		}
-		println("handling new conn ", conn.LocalAddr().String())
+
 		go t.handler.Handle(conn)
 	}
 
