@@ -2,6 +2,7 @@ package lb
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 	"strings"
 	"testing"
@@ -92,5 +93,5 @@ func TestNormalizeHost(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 
-	println(h, e)
+	log.Println(h, e)
 }

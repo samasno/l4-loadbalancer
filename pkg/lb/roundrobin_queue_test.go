@@ -1,6 +1,9 @@
 package lb
 
-import "testing"
+import (
+	"log"
+	"testing"
+)
 
 func TestRoundRobin(t *testing.T) {
 	testHosts := []Host{
@@ -15,7 +18,9 @@ func TestRoundRobin(t *testing.T) {
 		r.Add(h)
 	}
 
-	println(r.String())
+	if len(testHosts) != r.Count() {
+		log.Fatalf("expected %d got %d", len(testHosts), r.Count())
+	}
 }
 
 func TestRoundRobinNext(t *testing.T) {
